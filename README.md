@@ -40,7 +40,7 @@ Unit Tests: test cases are in the tests/ directory of DataFusion.
 * Null Values: Inputs where some or all arguments are null.
 
 ```
-cargo test --test greates_function_test
+cargo test --test greatest_function_test
 ```
 
 
