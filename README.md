@@ -1,8 +1,10 @@
 # Prerequsites 
 
 ```
+sudo apt-get install protobuf-compiler
 sudo apt  install rustup
 rustup default stable
+
 git clone https://github.com/apache/datafusion.git
 cd datafusion
 cargo build
