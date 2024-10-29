@@ -7,7 +7,7 @@ rustup default stable
 
 git clone https://github.com/apache/datafusion.git
 cd datafusion
-cargo build
+cargo build -j 1
 ```
 
 
