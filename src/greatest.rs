@@ -31,7 +31,13 @@ fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarVal
         (ScalarValue::Int32(Some(max)), ScalarValue::Int32(Some(new))) => {
             ScalarValue::Int32(Some(cmp::max(max, new)))
         }
-        (ScalarValue::Int64(Some(max)), ScalarValue::Int64(Some(new))) => {
+        (ScalarValue::Int32(Some(max)), ScalarValue::Int64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+        }
+        (ScalarValue::Int64(Some(max)), ScalarValue::Int32(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+        }
+         (ScalarValue::Int64(Some(max)), ScalarValue::Int64(Some(new))) => {
             ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
         (ScalarValue::Float32(Some(max)), ScalarValue::Float32(Some(new))) => {
@@ -79,7 +85,8 @@ pub fn run_query() -> Result<()> {
         ScalarValue::Int32(Some(1)),
         ScalarValue::Int32(Some(2)),
         ScalarValue::Int32(Some(3)),
-        ScalarValue::Float64(Some(3.2)),
+        ScalarValue::Int64(Some(4)),
+        ScalarValue::Float64(Some(4.2)),
     ];
 
     let max_value = greatest(values)?;
