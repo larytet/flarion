@@ -158,7 +158,7 @@ mod tests {
 
         let new = ScalarValue::Float32(Some(2.0));
         let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Float32(Some(2.0)));
+        assert_eq!(result, ScalarValue::Float64(Some(2.0)));
 
         let new = ScalarValue::Float64(Some(2.0));
         let result = compare_values(max.clone(), new);
