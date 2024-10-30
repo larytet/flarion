@@ -137,6 +137,7 @@ mod tests {
     use datafusion::scalar::ScalarValue;
     use super::compare_values;
     use super::greatest_in_columns;
+    use super::pick_max_value;
     // or just use super::*; ?
 
     #[test]
@@ -156,6 +157,10 @@ mod tests {
 
         let new = ScalarValue::Float64(Some(2.0));
         let result = compare_values(max.clone(), new);
+        assert_eq!(result, ScalarValue::Float64(Some(2.0)));
+
+        let new = ScalarValue::Float64(Some(2.0));
+        let result = pick_max_value(Some(max.clone()), new).expect("Failed to pick the max");        
         assert_eq!(result, ScalarValue::Float64(Some(2.0)));
     }
 
