@@ -14,6 +14,19 @@ pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
     Ok(max_value.unwrap_or(ScalarValue::Null))
 }
 
+/// Find the greatest in columns
+pub fn greatest_in_columns(columns: Vec<Vec<ScalarValue>>) -> Result<ScalarValue> {
+    let mut overall_max: Option<ScalarValue> = None;
+
+    for column in columns {
+        let column_max = greatest(column)?; 
+        overall_max = update_max_value(overall_max, column_max); 
+    }
+
+    Ok(overall_max.unwrap_or(ScalarValue::Null))
+}
+
+
 /// Update the current maximum value based on the new value.
 fn update_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> Option<ScalarValue> {
     match max_value {
@@ -123,6 +136,7 @@ pub fn run_query() -> Result<()> {
 mod tests {
     use datafusion::scalar::ScalarValue;
     use crate::greatest::compare_values;
+    use crate::greatest::greatest_in_columns;
     // or just use super::*; ?
 
     #[test]
@@ -207,5 +221,17 @@ mod tests {
         let new = ScalarValue::Boolean(Some(true)); 
         let result = compare_values(max.clone(), new);
         assert_eq!(result, max); 
+    }
+
+
+    #[test]
+    fn test_greatest_in_columns() {
+        let columns: Vec<Vec<ScalarValue>> = vec![
+            vec![ScalarValue::Int32(Some(1)), ScalarValue::Int64(Some(2))],
+            vec![ScalarValue::Float32(Some(3.0)), ScalarValue::Float64(Some(4.0))],
+        ];
+
+        let result = greatest_in_columns(columns).unwrap();
+        assert_eq!(result, ScalarValue::Float64(Some(4.0)));
     }
 }

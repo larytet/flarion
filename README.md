@@ -13,7 +13,8 @@ cargo build -j 1
 
 # Guidelines and implementation
 
-The greatest function in Spark returns the largest value given a list of columns for each row. This implementation should handle:
+In Apache Spark, the greatest() accepts multiple columns and returns the greatest value from those columns. The function returns a single greatest value. The accurate implementation should handle:
+
 * Variable numbers of arguments.
 * Multiple data types, especially numerical and string types.
 * Edge cases, such as all-null inputs or mixed data types.
