@@ -3,7 +3,7 @@ use std::cmp;
 use datafusion::error::Result;
 use datafusion::scalar::ScalarValue;
 
-/// Find the greatest value in a vector of ScalarValues.
+/// Find the greatest value in a vector of ScalarValues
 pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
     let mut max_value: Option<ScalarValue> = None;
 
