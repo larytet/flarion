@@ -28,14 +28,13 @@ pub fn greatest_in_columns(columns: Vec<Vec<ScalarValue>>) -> Result<ScalarValue
 }
 
 
-/// Update the current maximum value based on the new value.
+/// Return the max of two args
 fn pick_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> Option<ScalarValue> {
     match max_value {
         Some(current_max) => {
-            // Compare the current max with the new value and return the greater one
             Some(compare_values(current_max, new_value))
         }
-        None => Some(new_value), // If no max value, set it to the new value
+        None => Some(new_value),
     }
 }
 
