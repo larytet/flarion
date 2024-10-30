@@ -32,13 +32,13 @@ fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarVal
             ScalarValue::Int32(Some(cmp::max(max, new)))
         }
         (ScalarValue::Int32(Some(max)), ScalarValue::Int64(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+            ScalarValue::Int64(Some(i64::max(max as i64, new as i64)))
         }
         (ScalarValue::Int32(Some(max)), ScalarValue::Float32(Some(new))) => {
-            ScalarValue::Float32(Some(f32::max(max as f32, new)))
+            ScalarValue::Float32(Some(f32::max(max as f32, new as f32)))
         }
         (ScalarValue::Int32(Some(max)), ScalarValue::Float64(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max as f64, new)))
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
 
         (ScalarValue::Int64(Some(max)), ScalarValue::Int32(Some(new))) => {
@@ -54,18 +54,33 @@ fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarVal
             ScalarValue::Float64(Some(f64::max(max as f64, new)))
         }
 
+        (ScalarValue::Float32(Some(max)), ScalarValue::Int32(Some(new))) => {
+            ScalarValue::Float32(Some(f32::max(max as f32, new as f32)))
+        }
+        (ScalarValue::Float32(Some(max)), ScalarValue::Int64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+        }
         (ScalarValue::Float32(Some(max)), ScalarValue::Float32(Some(new))) => {
-            ScalarValue::Float32(Some(f32::max(max, new)))
+            ScalarValue::Float32(Some(f32::max(max as f32, new as f32)))
         }
-        (ScalarValue::Float64(Some(max)), ScalarValue::Float64(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max, new)))
+        (ScalarValue::Float32(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
+
         (ScalarValue::Float64(Some(max)), ScalarValue::Int32(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max, new as f64)))
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
         (ScalarValue::Float64(Some(max)), ScalarValue::Int64(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max, new as f64)))
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
+        (ScalarValue::Float64(Some(max)), ScalarValue::Float32(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+        }
+        (ScalarValue::Float64(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+        }
+
+
         (ScalarValue::Boolean(Some(max)), ScalarValue::Boolean(Some(new))) => {
             // "true" > "false"
             if new && !max {
@@ -94,7 +109,6 @@ pub fn run_query() -> Result<()> {
         ScalarValue::Int32(Some(2)),
         ScalarValue::Int32(Some(3)),
         ScalarValue::Int64(Some(4)),
-        ScalarValue::Float64(Some(4.2)),
     ];
 
     let max_value = greatest(values)?;
