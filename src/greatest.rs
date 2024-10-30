@@ -34,23 +34,31 @@ fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarVal
         (ScalarValue::Int32(Some(max)), ScalarValue::Int64(Some(new))) => {
             ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
+        (ScalarValue::Int32(Some(max)), ScalarValue::Float32(Some(new))) => {
+            ScalarValue::Float32(Some(f32::max(max as f32, new)))
+        }
+        (ScalarValue::Int32(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new)))
+        }
+
         (ScalarValue::Int64(Some(max)), ScalarValue::Int32(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
+            ScalarValue::Int64(Some(i64::max(max as i64, new as i64)))
         }
          (ScalarValue::Int64(Some(max)), ScalarValue::Int64(Some(new))) => {
+            ScalarValue::Int64(Some(i64::max(max as i64, new as i64)))
+        }
+        (ScalarValue::Int64(Some(max)), ScalarValue::Float32(Some(new))) => {
             ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
+        (ScalarValue::Int64(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new)))
+        }
+
         (ScalarValue::Float32(Some(max)), ScalarValue::Float32(Some(new))) => {
             ScalarValue::Float32(Some(f32::max(max, new)))
         }
         (ScalarValue::Float64(Some(max)), ScalarValue::Float64(Some(new))) => {
             ScalarValue::Float64(Some(f64::max(max, new)))
-        }
-        (ScalarValue::Int32(Some(max)), ScalarValue::Float64(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max as f64, new)))
-        }
-        (ScalarValue::Int64(Some(max)), ScalarValue::Float64(Some(new))) => {
-            ScalarValue::Float64(Some(f64::max(max as f64, new)))
         }
         (ScalarValue::Float64(Some(max)), ScalarValue::Int32(Some(new))) => {
             ScalarValue::Float64(Some(f64::max(max, new as f64)))
