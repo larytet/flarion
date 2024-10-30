@@ -44,3 +44,5 @@ cargo test --test greatest_function_test
 ```
 
 
+To test this greatest function with a real DataFusion query, I integrate it as a user-defined function (UDF) in DataFusion, 
+then create a simple query to find the greatest value in a column.
