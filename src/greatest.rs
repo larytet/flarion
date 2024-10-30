@@ -15,6 +15,7 @@ pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
 }
 
 /// Find the greatest in columns
+#[allow(dead_code)]
 pub fn greatest_in_columns(columns: Vec<Vec<ScalarValue>>) -> Result<ScalarValue> {
     let mut overall_max: Option<ScalarValue> = None;
 
