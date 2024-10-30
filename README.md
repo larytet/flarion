@@ -19,7 +19,8 @@ In Apache Spark, the greatest() accepts multiple columns and returns the greates
 * Multiple data types, especially numerical and string types.
 * Edge cases, such as all-null inputs or mixed data types.
 
-Tips are in DataFusion’s current function library in datafusion/src/physical_plan/expressions 
+Tips are in DataFusion’s current function library in 
+https://github.com/apache/datafusion/blob/main/datafusion/physical-expr/src/expressions
 
 To test the `greatest` function I integrate it as a user-defined function (UDF) in DataFusion, 
 then create a query to find the max value in a column.
