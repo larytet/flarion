@@ -28,7 +28,7 @@ pub fn greatest_in_columns(columns: Vec<Vec<ScalarValue>>) -> Result<ScalarValue
 }
 
 
-/// Return the max of two args
+/// Return the max of two args handling None
 fn pick_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> Option<ScalarValue> {
     match max_value {
         Some(current_max) => {
