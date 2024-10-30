@@ -107,6 +107,7 @@ pub fn run_query() -> Result<()> {
     let values = vec![
         ScalarValue::Int32(Some(1)),
         ScalarValue::Int32(Some(2)),
+        ScalarValue::Float32(Some(3.2)),
         ScalarValue::Int32(Some(3)),
         ScalarValue::Int64(Some(4)),
     ];
