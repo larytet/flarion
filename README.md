@@ -44,24 +44,3 @@ cargo test --test greatest_function_test
 ```
 
 
-The code outline 
-
-```rust 
-use datafusion::error::Result;
-use datafusion::scalar::ScalarValue;
-
-pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
-    let mut max_value = None;
-
-    for value in values {
-        if let Some(current_max) = max_value {
-            max_value = Some(current_max.max(value));
-        } else {
-            max_value = Some(value);
-        }
-    }
-
-    Ok(max_value.unwrap_or(ScalarValue::Null))
-}
-```
-
