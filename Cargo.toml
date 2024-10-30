@@ -1,5 +1,5 @@
-[workspace]
-members = ["greatest"]
+[package]
+name = "flarion"
 
 [dependencies]
-datafusion = "42"
+datafusion = "42" 
