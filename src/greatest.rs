@@ -141,6 +141,14 @@ mod tests {
     // or just use super::*; ?
 
     #[test]
+    fn test_pick_max_value() {
+        let max = ScalarValue::Int32(Some(1));
+        let new = ScalarValue::Float64(Some(2.0));
+        let result = pick_max_value(Some(max), new).expect("Failed to pick the max");        
+        assert_eq!(result, ScalarValue::Float64(Some(2.0)));
+    }
+
+    #[test]
     fn test_compare_int32() {
         let max = ScalarValue::Int32(Some(1));
         let new = ScalarValue::Int32(Some(2));
@@ -157,10 +165,6 @@ mod tests {
 
         let new = ScalarValue::Float64(Some(2.0));
         let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Float64(Some(2.0)));
-
-        let new = ScalarValue::Float64(Some(2.0));
-        let result = pick_max_value(Some(max.clone()), new).expect("Failed to pick the max");        
         assert_eq!(result, ScalarValue::Float64(Some(2.0)));
     }
 
