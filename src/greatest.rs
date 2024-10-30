@@ -135,8 +135,8 @@ pub fn run_query() -> Result<()> {
 #[cfg(test)]
 mod tests {
     use datafusion::scalar::ScalarValue;
-    use crate::greatest::compare_values;
-    use crate::greatest::greatest_in_columns;
+    use super::compare_values;
+    use super::greatest_in_columns;
     // or just use super::*; ?
 
     #[test]
