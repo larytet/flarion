@@ -188,8 +188,8 @@ mod tests {
     #[test]
     fn test_compare_unsupported() {
         let max = ScalarValue::Int32(Some(10));
-        let new = ScalarValue::Boolean(Some(true)); // Unsupported type
+        let new = ScalarValue::Boolean(Some(true)); 
         let result = compare_values(max.clone(), new);
-        assert_eq!(result, max); // Should return the current max
+        assert_eq!(result, max); 
     }
 }
