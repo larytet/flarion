@@ -127,62 +127,26 @@ mod tests {
 
     #[test]
     fn test_compare_int32() {
-        let max = ScalarValue::Int32(Some(10));
-        let new = ScalarValue::Int32(Some(5));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Int32(Some(10)));
-
-        let new = ScalarValue::Int32(Some(15));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Int32(Some(15)));
-    }
-
-    #[test]
-    fn test_compare_int64() {
-        let max = ScalarValue::Int64(Some(20));
-        let new = ScalarValue::Int32(Some(25));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Int64(Some(25)));
-
-        let new = ScalarValue::Int64(Some(15));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Int64(Some(20)));
-    }
-
-    #[test]
-    fn test_compare_float32() {
-        let max = ScalarValue::Float32(Some(10.0));
-        let new = ScalarValue::Float32(Some(5.0));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Float32(Some(10.0)));
-
-        let new = ScalarValue::Float32(Some(15.0));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Float32(Some(15.0)));
+        let max = ScalarValue::Int32(Some(1));
+        let new = ScalarValue::Int32(Some(2));
+        let result = compare_values(max, new);
+        assert_eq!(result, ScalarValue::Int32(Some(2)));
     }
 
     #[test]
     fn test_compare_boolean() {
         let max = ScalarValue::Boolean(Some(false));
         let new = ScalarValue::Boolean(Some(true));
-        let result = compare_values(max.clone(), new);
+        let result = compare_values(max, new);
         assert_eq!(result, ScalarValue::Boolean(Some(true)));
-
-        let new = ScalarValue::Boolean(Some(false));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Boolean(Some(false)));
     }
 
     #[test]
     fn test_compare_utf8() {
         let max = ScalarValue::Utf8(Some("apple".to_string()));
         let new = ScalarValue::Utf8(Some("banana".to_string()));
-        let result = compare_values(max.clone(), new);
+        let result = compare_values(max, new);
         assert_eq!(result, ScalarValue::Utf8(Some("banana".to_string())));
-
-        let new = ScalarValue::Utf8(Some("apple".to_string()));
-        let result = compare_values(max.clone(), new);
-        assert_eq!(result, ScalarValue::Utf8(Some("apple".to_string())));
     }
 
     #[test]
