@@ -43,9 +43,3 @@ Unit Tests: test cases are in the tests/ directory of DataFusion.
 
 To test this greatest function with a real DataFusion query, I integrate it as a user-defined function (UDF) in DataFusion, 
 then create a simple query to find the greatest value in a column.
-
-
-```
-cargo new greatest --bin
-cargo build
-```
