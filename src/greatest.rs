@@ -23,36 +23,50 @@ fn update_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> O
     }
 }
 
-/// Return the greater of two values.
+/// Return the greater of two values, type cast if possible to match the Spark's behavior
+// Support for Int32, Float32, Int64, Float64, String, Boolean
 fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarValue {
     match (current_max.clone(), new_value) {
         (ScalarValue::Int32(Some(max)), ScalarValue::Int32(Some(new))) => {
-            if new > max {
-                ScalarValue::Int32(Some(new))
-            } else {
-                // Return the current_max since it's not changed
-                current_max 
-            }
+            ScalarValue::Int32(Some(max.max(new)))
+        }
+        (ScalarValue::Int64(Some(max)), ScalarValue::Int64(Some(new))) => {
+            ScalarValue::Int64(Some(max.max(new)))
         }
         (ScalarValue::Float32(Some(max)), ScalarValue::Float32(Some(new))) => {
-            if new > max {
-                ScalarValue::Float32(Some(new))
+            ScalarValue::Float32(Some(max.max(new)))
+        }
+        (ScalarValue::Float64(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(max.max(new)))
+        }
+        (ScalarValue::Boolean(Some(max)), ScalarValue::Boolean(Some(new))) => {
+            // "true" > "false"
+            if new && !max {
+                ScalarValue::Boolean(Some(true))
             } else {
-                // Return the current_max since it's not changed
-                current_max 
+                current_max
             }
         }
-        // unsupported type: return current max (None)
-        _ => current_max, 
+        (ScalarValue::Utf8(Some(ref max)), ScalarValue::Utf8(Some(ref new))) => {
+            // string
+            if new > max {
+                ScalarValue::Utf8(Some(new.clone()))
+            } else {
+                current_max
+            }
+        }
+// unsupported return the current (None?)
+        _ => current_max,
     }
 }
 
-/// Run the query to demonstrate the greatest function.
+/// Demo
 pub fn run_query() -> Result<()> {
     let values = vec![
         ScalarValue::Int32(Some(1)),
-        ScalarValue::Int32(Some(5)),
+        ScalarValue::Int32(Some(2)),
         ScalarValue::Int32(Some(3)),
+        ScalarValue::Float64(Some(3.2)),
     ];
 
     let max_value = greatest(values)?;
