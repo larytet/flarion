@@ -1,5 +1,6 @@
 use datafusion::error::Result;
 use datafusion::scalar::ScalarValue;
+use std::cmp;
 
 /// Find the greatest value in a vector of ScalarValues.
 pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
@@ -24,20 +25,32 @@ fn update_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> O
 }
 
 /// Return the greater of two values, type cast if possible to match the Spark's behavior
-// Support for Int32, Float32, Int64, Float64, String, Boolean
+/// Support for Int32, Float32, Int64, Float64, String, Boolean
 fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarValue {
     match (current_max.clone(), new_value) {
         (ScalarValue::Int32(Some(max)), ScalarValue::Int32(Some(new))) => {
-            ScalarValue::Int32(Some(max.max(new)))
+            ScalarValue::Int32(Some(cmp::max(max, new)))
         }
         (ScalarValue::Int64(Some(max)), ScalarValue::Int64(Some(new))) => {
-            ScalarValue::Int64(Some(max.max(new)))
+            ScalarValue::Float64(Some(f64::max(max as f64, new as f64)))
         }
         (ScalarValue::Float32(Some(max)), ScalarValue::Float32(Some(new))) => {
-            ScalarValue::Float32(Some(max.max(new)))
+            ScalarValue::Float32(Some(f32::max(max, new)))
         }
         (ScalarValue::Float64(Some(max)), ScalarValue::Float64(Some(new))) => {
-            ScalarValue::Float64(Some(max.max(new)))
+            ScalarValue::Float64(Some(f64::max(max, new)))
+        }
+        (ScalarValue::Int32(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new)))
+        }
+        (ScalarValue::Int64(Some(max)), ScalarValue::Float64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max as f64, new)))
+        }
+        (ScalarValue::Float64(Some(max)), ScalarValue::Int32(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max, new as f64)))
+        }
+        (ScalarValue::Float64(Some(max)), ScalarValue::Int64(Some(new))) => {
+            ScalarValue::Float64(Some(f64::max(max, new as f64)))
         }
         (ScalarValue::Boolean(Some(max)), ScalarValue::Boolean(Some(new))) => {
             // "true" > "false"
@@ -48,14 +61,14 @@ fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarVal
             }
         }
         (ScalarValue::Utf8(Some(ref max)), ScalarValue::Utf8(Some(ref new))) => {
-            // string
+            // string comparison
             if new > max {
                 ScalarValue::Utf8(Some(new.clone()))
             } else {
                 current_max
             }
         }
-// unsupported return the current (None?)
+        // unsupported, return the current (None?)
         _ => current_max,
     }
 }
