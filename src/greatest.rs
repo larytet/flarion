@@ -8,7 +8,7 @@ pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
     let mut max_value: Option<ScalarValue> = None;
 
     for value in values {
-        max_value = update_max_value(max_value, value);
+        max_value = pick_max_value(max_value, value);
     }
 
     Ok(max_value.unwrap_or(ScalarValue::Null))
@@ -21,7 +21,7 @@ pub fn greatest_in_columns(columns: Vec<Vec<ScalarValue>>) -> Result<ScalarValue
 
     for column in columns {
         let column_max = greatest(column)?; 
-        overall_max = update_max_value(overall_max, column_max); 
+        overall_max = pick_max_value(overall_max, column_max); 
     }
 
     Ok(overall_max.unwrap_or(ScalarValue::Null))
@@ -29,7 +29,7 @@ pub fn greatest_in_columns(columns: Vec<Vec<ScalarValue>>) -> Result<ScalarValue
 
 
 /// Update the current maximum value based on the new value.
-fn update_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> Option<ScalarValue> {
+fn pick_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> Option<ScalarValue> {
     match max_value {
         Some(current_max) => {
             // Compare the current max with the new value and return the greater one
