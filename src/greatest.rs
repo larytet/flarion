@@ -1,7 +1,7 @@
 use datafusion::error::Result;
 use datafusion::scalar::ScalarValue;
 
-/// Main function to find the greatest value in a vector of ScalarValues.
+/// Find the greatest value in a vector of ScalarValues.
 pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
     let mut max_value: Option<ScalarValue> = None;
 
@@ -23,25 +23,27 @@ fn update_max_value(max_value: Option<ScalarValue>, new_value: ScalarValue) -> O
     }
 }
 
-/// Compare two ScalarValues and return the greater one.
+/// Return the greater of two values.
 fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarValue {
     match (current_max.clone(), new_value) {
         (ScalarValue::Int32(Some(max)), ScalarValue::Int32(Some(new))) => {
             if new > max {
                 ScalarValue::Int32(Some(new))
             } else {
-                current_max // Return the current_max since it's not changed
+                // Return the current_max since it's not changed
+                current_max 
             }
         }
         (ScalarValue::Float32(Some(max)), ScalarValue::Float32(Some(new))) => {
             if new > max {
                 ScalarValue::Float32(Some(new))
             } else {
-                current_max // Return the current_max since it's not changed
+                // Return the current_max since it's not changed
+                current_max 
             }
         }
-        // Handle other scalar types as needed
-        _ => current_max, // Default to current max if types don't match
+        // unsupported type: return current max (None)
+        _ => current_max, 
     }
 }
 
