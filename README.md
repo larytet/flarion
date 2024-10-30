@@ -24,4 +24,8 @@ Tips are in DataFusion’s current function library in datafusion/src/physical_p
 To test this greatest function with a real DataFusion query, I integrate it as a user-defined function (UDF) in DataFusion, 
 then create a simple query to find the greatest value in a column.
 
-# larion
+# usage larion
+
+```
+cargo build;cargo run
+```
