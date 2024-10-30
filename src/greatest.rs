@@ -1,6 +1,7 @@
+use std::cmp;
+// use std::borrow::Cow;
 use datafusion::error::Result;
 use datafusion::scalar::ScalarValue;
-use std::cmp;
 
 /// Find the greatest value in a vector of ScalarValues.
 pub fn greatest(values: Vec<ScalarValue>) -> Result<ScalarValue> {
@@ -90,7 +91,7 @@ fn compare_values(current_max: ScalarValue, new_value: ScalarValue) -> ScalarVal
             }
         }
         (ScalarValue::Utf8(Some(ref max)), ScalarValue::Utf8(Some(ref new))) => {
-            // string comparison
+            // string comparison, retutn a cloned string
             if new > max {
                 ScalarValue::Utf8(Some(new.clone()))
             } else {
