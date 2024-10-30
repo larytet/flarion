@@ -142,9 +142,10 @@ mod tests {
 
     #[test]
     fn test_pick_max_value() {
-        let max = ScalarValue::Int32(Some(1));
-        let new = ScalarValue::Float64(Some(2.0));
-        let result = pick_max_value(Some(max), new).expect("Failed to pick the max");        
+        let result = pick_max_value(
+            Some(ScalarValue::Int32(Some(1))), 
+            ScalarValue::Float64(Some(2.0))
+        ).expect("Failed to pick the max");        
         assert_eq!(result, ScalarValue::Float64(Some(2.0)));
     }
 
