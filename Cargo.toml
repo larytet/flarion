@@ -1,0 +1,2 @@
+[dependencies]
+datafusion = "42"
