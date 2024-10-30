@@ -119,11 +119,10 @@ pub fn run_query() -> Result<()> {
     Ok(())
 }
 
-
-
 #[cfg(test)]
 mod tests {
-    use super::*; 
+    use datafusion::scalar::ScalarValue;
+    use crate::greatest::compare_values;
 
     #[test]
     fn test_compare_int32() {
