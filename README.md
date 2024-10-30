@@ -21,8 +21,8 @@ In Apache Spark, the greatest() accepts multiple columns and returns the greates
 
 Tips are in DataFusion’s current function library in datafusion/src/physical_plan/expressions 
 
-To test this greatest function with a real DataFusion query, I integrate it as a user-defined function (UDF) in DataFusion, 
-then create a simple query to find the greatest value in a column.
+To test the `greatest` function I integrate it as a user-defined function (UDF) in DataFusion, 
+then create a query to find the max value in a column.
 
 # usage larion
 
