@@ -1,2 +1,5 @@
+[workspace]
+members = ["greatest"]
+
 [dependencies]
 datafusion = "42"
