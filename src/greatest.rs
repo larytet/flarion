@@ -231,7 +231,7 @@ mod tests {
             vec![ScalarValue::Float32(Some(3.0)), ScalarValue::Float64(Some(4.0))],
         ];
 
-        let result = greatest_in_columns(columns).unwrap();
+        let result = greatest_in_columns(columns).expect("Failed to get greatest value");
         assert_eq!(result, ScalarValue::Float64(Some(4.0)));
     }
 }
